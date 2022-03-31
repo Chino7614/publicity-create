@@ -1,0 +1,49 @@
+<p-card>
+    <form action="" [formGroup]="form">
+        <div class="p-fluid grid">
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText formControlName="url1">
+                    <label for="inputtext">URL 1</label>
+                </span>
+            </div>
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText formControlName="url2">
+                    <label for="inputtext">URL 2</label>
+                </span>
+            </div>
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText formControlName="url3">
+                    <label for="inputtext">URL 3</label>
+                </span>
+            </div>
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label">
+                    <input type="file" id="inputtext" pInputText (change)="imagePreview($event)">
+
+                </span>
+
+            </div>
+            <div *ngIf="form.get('image')?.value" class="field col-12">
+
+                <p-image src="{{form.get('image')?.value}}" alt="Image" width="250">
+                    <ng-template pTemplate="indicator">
+                        Indicator Content
+                    </ng-template>
+                </p-image>
+
+            </div>
+            <div class="field col-12 ">
+                <span class="p-float-label">
+                    <textarea pInputTextarea formControlName="description"></textarea>
+                    <label for="inputtext">URL 3</label>
+                </span>
+            </div>
+            <div class="field">
+                <button class="p-button-success" pButton type="button" label="Continuar"></button>
+            </div>
+        </div>
+    </form>
+</p-card>
