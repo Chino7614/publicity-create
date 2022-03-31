@@ -1,0 +1,31 @@
+<p-card>
+    <label for="">La ruta es la siguiente: https://www.teker.design/es</label>
+    <div class="flex">
+
+        <div class="p-fluid grid col-6">
+            <div class="field col-12">
+                <label for="inputtext">URL 1: </label>
+                <strong>{{information?.url1}}</strong>
+            </div>
+            <div class="field col-12">
+                <label for="inputtext">URL 2: </label>
+                <strong>{{information?.url2}}</strong>
+            </div>
+            <div class="field col-12">
+                <label for="inputtext">URL 3: </label>
+                <strong>{{information?.url3}}</strong>
+            </div>
+            <div class="field col-12">
+                <label for="inputtext">Descripción: </label>
+                <strong>{{information?.description}}</strong>
+            </div>
+        </div>
+        <div class="flex col-6 justify-content-center align-items-center">
+            <p-image class="pt-4" src="{{information?.image}}" alt="Image" width="250">
+            </p-image>
+        </div>
+    </div>
+    <div class="field">
+        <button class="p-button-success" pButton type="submit" label="Regresar" [routerLink]="''"></button>
+    </div>
+</p-card>
