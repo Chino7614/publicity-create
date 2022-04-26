@@ -18,6 +18,8 @@ import { RegisterRoutingModule } from "./register-routing.module";
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
+import { SplitterModule } from 'primeng/splitter';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { ButtonModule } from 'primeng/button';
     CardModule,
     ImageModule,
     ButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SplitterModule,
+    FileUploadModule
   ]
 })
 export class RegisterModule { }

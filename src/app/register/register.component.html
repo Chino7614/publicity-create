@@ -1,49 +1,86 @@
-<p-card>
-    <form action="" [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="flex">
-            <div class="p-fluid grid col-6">
-                <div class="field col-12">
-                    <span class="p-float-label">
-                        <input type="text" id="inputtext" pInputText formControlName="url1">
-                        <label for="inputtext">URL 1</label>
-                    </span>
-                </div>
-                <div class="field col-12">
-                    <span class="p-float-label">
-                        <input type="text" id="inputtext" pInputText formControlName="url2">
-                        <label for="inputtext">URL 2</label>
-                    </span>
-                </div>
-                <div class="field col-12">
-                    <span class="p-float-label">
-                        <input type="text" id="inputtext" pInputText formControlName="url3">
-                        <label for="inputtext">URL 3</label>
-                    </span>
-                </div>
+<p-splitter [style]="{ height: '50%' }" layout="horizontal">
+  <ng-template pTemplate>
+    <p-card class="flex flex-column">
+      <h1>Configuración</h1>
+      <h5 class="mb-5">
+        Ingresa la URL y selecciona la imagen del link que quieres agregar a tu
+        página
+      </h5>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <button
+          class="p-button"
+          pButton
+          type="button"
+          label="Selecciona la imagen principal de tu página"
+          (click)="mainImageFile.click()"
+        ></button>
+        <input
+          #mainImageFile
+          type="file"
+          id="inputtext"
+          accept="image/*"
+          pInputText
+          (change)="onImageSelected($event)"
+          style="display: none"
+        />
 
-                <div class="field col-12">
-                    <span class="p-float-label">
-                        <textarea pInputTextarea formControlName="description"></textarea>
-                        <label for="inputtext">Descripción</label>
-                    </span>
-                </div>
-                <div class="field col-12">
-                    <span class="p-float-label">
-                        <input type="file" id="inputtext" accept="image/*" pInputText (change)="imagePreview($event)">
+        <ng-container
+          *ngTemplateOutlet="linkContainer; context: { index: 1 }"
+        ></ng-container>
+        <ng-container
+          *ngTemplateOutlet="linkContainer; context: { index: 2 }"
+        ></ng-container>
+        <ng-container
+          *ngTemplateOutlet="linkContainer; context: { index: 3 }"
+        ></ng-container>
+      </form>
+    </p-card>
+  </ng-template>
+  <ng-template pTemplate>
+    <div class="flex flex-column">
+      <h1>Preview</h1>
+      <canvas id="canvasEl" width=400 height=400  ></canvas> 
 
-                    </span>
+      <div class="flex">
+        <button
+          class="p-button-success"
+          pButton
+          type="submit"
+          label="Continuar"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-splitter>
 
-                </div>
-            </div>
-            <div *ngIf="form.get('image')?.value" class="flex col-6 justify-content-center">
-
-                <p-image src="{{form.get('image')?.value}}" alt="Image" width="250">
-                </p-image>
-
-            </div>
-        </div>
-        <div class="field">
-            <button class="p-button-success" pButton type="submit" label="Continuar"></button>
-        </div>
-    </form>
-</p-card>
+<ng-template #linkContainer let-index="index">
+  <div class="flex flex-column my-5" [formGroup]="form">
+    <h3 class="mb-5">Link {{ index }}</h3>
+    <div class="flex" [formGroupName]="'link' + index">
+      <span class="p-float-label">
+        <input type="text" id="url" pInputText formControlName="url" />
+        <label for="inputtext">Ingresa la URL del link {{ index }}</label>
+      </span>
+      <button
+      *ngIf="!form.get(['link' +index, 'image'])?.value"
+        class="p-button mx-1"
+        pButton
+        type="button"
+        label="Selecciona la imagen de link {{ index }}"
+        (click)="onLinkImageClick(index)"
+      ></button>
+      <!-- <div *ngIf="form.get(['link' +index, 'image'])?.value" class="p-2">
+        <p-image src="{{ form.get(['link' +index, 'image'])?.value }}" alt="Image" width="100%">
+        </p-image>
+      </div> -->
+      <input
+        id="linkImageUpload{{ index }}"
+        type="file"
+        accept="image/*"
+        pInputText
+        (change)="onLinkImageSelected($event, index)"
+        style="display: none"
+      />
+    </div>
+  </div>
+</ng-template>
