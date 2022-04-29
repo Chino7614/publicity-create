@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -18,30 +19,13 @@ export class RegisterComponent implements OnInit {
 
   constructor(private readonly fb: FormBuilder, private router: Router) {
     this.form = this.fb.group({
-      url1: ['', [Validators.required]],
-      url2: ['', [Validators.required]],
-      url3: ['', [Validators.required]],
-      link1: new FormGroup({
-        url: new FormControl(null, Validators.required),
-        image: new FormControl(null, Validators.required),
-        hint: new FormControl(null, Validators.required),
-      }),
-      link2: new FormGroup({
-        url: new FormControl(null, Validators.required),
-        image: new FormControl(null, Validators.required),
-        hint: new FormControl(null, Validators.required),
-      }),
-      link3: new FormGroup({
-        url: new FormControl(null, Validators.required),
-        image: new FormControl(null, Validators.required),
-        hint: new FormControl(null, Validators.required),
-      }),
       image: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      linksArray: this.fb.array([])
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onLinkImageClick(index: number): void {
     document.getElementById('linkImageUpload' + index)?.click();
@@ -60,9 +44,9 @@ export class RegisterComponent implements OnInit {
         swedishflagbg.onload = function () {
           canvasContext?.drawImage(
             swedishflagbg,
-            0 ,
-            0+ (index * 60),
-            100 ,
+            0,
+            0 + (index * 60),
+            100,
             50
           );
         };
@@ -101,5 +85,22 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  myUploader($event: any): void {}
+  addedNewLink() {
+    console.log('asdfasdfasdf', this.linksArray().controls.length);
+
+    this.linksArray().push(this.newLink());
+  }
+
+  newLink(): FormGroup {
+    return this.fb.group({
+      url: '',
+      image: ''
+    })
+  }
+
+  linksArray(): FormArray {
+    return this.form.get("linksArray") as FormArray;
+  }
+
+  myUploader($event: any): void { }
 }
